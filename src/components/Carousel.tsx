@@ -15,7 +15,7 @@ const Carousel: React.FC<CarouselProps> = ({ slides }) => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-8">
+    <div className="container mx-auto">
       <Slider {...settings}>
         {slides.map(slide => (
           <div key={slide.id}>
