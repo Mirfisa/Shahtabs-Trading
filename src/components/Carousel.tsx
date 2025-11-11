@@ -19,7 +19,7 @@ const Carousel: React.FC<CarouselProps> = ({ slides }) => {
       <Slider {...settings}>
         {slides.map(slide => (
           <div key={slide.id} className="relative">
-            <img src={slide.image} alt={slide.alt} className="w-full h-80 object-cover" />
+            <img src={slide.image} alt={slide.alt} className="w-full h-[500px] object-cover" />
             <div className="absolute inset-0 bg-black opacity-40"></div>
           </div>
         ))}
