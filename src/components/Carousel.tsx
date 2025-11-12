@@ -53,14 +53,6 @@ const Carousel: React.FC<CarouselProps> = ({ slides }) => {
         <p className="mt-4 text-lg">
           Pre-order | Ready Stock | Wholesale | Retail
         </p>
-        <div className="mt-8">
-          <a
-            href="/"
-            className="px-8 py-3 text-lg font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
-          >
-            Get Started
-          </a>
-        </div>
       </div>
     </div>
   );

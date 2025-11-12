@@ -40,7 +40,7 @@ function App() {
 
   return (
     <div className={`flex flex-col min-h-screen ${darkMode ? 'dark' : ''}`}>
-      <div className="flex-grow bg-white dark:bg-gray-900">
+      <div className="flex-grow bg-light-bg dark:bg-main-dark-bg">
         <TopBar /> {/* Render TopBar here */}
         <Header />
         <main>
