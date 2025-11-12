@@ -7,13 +7,13 @@ import { Smartphone} from 'lucide-react';
  */
 const TopBar = () => {
   return (
-    <nav className="w-full bg-[#f3f2f3] text-grey-900 px-4 sm:px-6 py-2">
+    <nav className="w-full bg-[#f3f2f3] text-grey-900 px-4 sm:px-6 py-2 dark:bg-black dark:text-white">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 md:gap-4">
         
         {/* Left Side: Contact Info */}
         <div className="flex items-center gap-2">
-          <Smartphone size={16} className="text-gray-900" />
-          <span className="text-xs sm:text-sm text-gray-900 font-medium">
+          <Smartphone size={16} className="text-gray-900 dark:text-white" />
+          <span className="text-xs sm:text-sm text-gray-900 font-medium dark:text-white">
             WhatsApp +88 018-11030303
             {/* Note: The image shows the number repeated, but I'm using a single instance for clarity. */}
           </span>

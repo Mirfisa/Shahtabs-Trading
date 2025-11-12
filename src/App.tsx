@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Carousel from './components/Carousel';
+import BrandLogos from './components/BrandLogos';
 import Features from './components/Features';
 import Footer from './components/Footer';
 import TopBar from './components/TopBar'; // Import TopBar
@@ -44,6 +45,7 @@ function App() {
         <Header />
         <main>
           <Carousel slides={slides} />
+          <BrandLogos />
           <Features />
         </main>
       </div>

@@ -11,7 +11,8 @@ const Carousel: React.FC<CarouselProps> = ({ slides }) => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    adaptiveHeight: true
+    adaptiveHeight: true,
+    arrows: false // This line removes the side navigation buttons
   };
 
   return (
