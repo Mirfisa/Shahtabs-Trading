@@ -1,0 +1,29 @@
+.booking-form-section {
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 1%, transparent 5%),
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 5%, transparent 10%),
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 10%, transparent 15%),
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 15%, transparent 20%),
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 20%, transparent 25%),
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 25%, transparent 30%),
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 30%, transparent 35%),
+      radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 35%, transparent 40%),
+      radial-gradient(circle, #F0BC99, #E6A16F);
+    padding: 4rem 0;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .booking-form-section {
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 1%, transparent 5%),
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 5%, transparent 10%),
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 10%, transparent 15%),
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 15%, transparent 20%),
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 20%, transparent 25%),
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 25%, transparent 30%),
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 30%, transparent 35%),
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 35%, transparent 40%),
+        radial-gradient(circle, #1E3A8A, #1C2B4D);
+    }
+  }
+  

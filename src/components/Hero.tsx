@@ -13,7 +13,7 @@ const Hero = () => {
         <div className="mt-8">
           <a
             href="/"
-            className="px-8 py-3 text-lg font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+            className="px-8 py-3 text-lg font-medium text-white bg-[#F0BC99] rounded-md hover:bg-[#E6A16F] dark:bg-[#1E3A8A] dark:hover:bg-[#1C2B4D]"
           >
             Get Started
           </a>

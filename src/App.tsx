@@ -3,7 +3,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Carousel from './components/Carousel';
 import BrandLogos from './components/BrandLogos';
-import Features from './components/Features';
+import BookingForm from './components/BookingForm';
 import Footer from './components/Footer';
 import TopBar from './components/TopBar'; // Import TopBar
 import { Slide } from './types';
@@ -46,7 +46,7 @@ function App() {
         <main>
           <Carousel slides={slides} />
           <BrandLogos />
-          <Features />
+          <BookingForm />
         </main>
       </div>
       <Footer />
