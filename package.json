@@ -2,6 +2,7 @@
   "name": "car_website",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Mirfisa.github.io/car_website",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -25,7 +26,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +54,7 @@
     "@types/react": "^19.2.3",
     "@types/react-dom": "^19.2.2",
     "@types/react-slick": "^0.23.13",
-    "@types/trusted-types": "^2.0.7"
+    "@types/trusted-types": "^2.0.7",
+    "gh-pages": "^6.3.0"
   }
 }
