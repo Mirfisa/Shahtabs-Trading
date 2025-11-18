@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import CarList from './components/CarList';
 import CarDetails from './components/CarDetails';
+import DataPage from './components/DataPage';
 import Footer from './components/Footer';
 import TopBar from './components/TopBar';
 import Header from './components/Header';
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cars" element={<CarList />} />
         <Route path="/car/:id" element={<CarDetails />} />
+        <Route path="/data" element={<DataPage />} />
       </Routes>
       <Footer />
     </Router>
