@@ -58,10 +58,11 @@ const CarList: React.FC = () => {
         Papa.parse(csv, {
           header: true,
           complete: (results) => {
+            console.log("Parsed data length:", results.data.length);
             console.log("Parsed data:", results.data);
             const processedCars = results.data.map((car: any) => {
               const carName = car['Car Name'];
-              const carGrade = car['Grade'];
+              const carGrade = car['Grade'] ? car['Grade'].trim() : '';
               const carModelYear = car['Model'];
               const carImgURL = car['imgURL'];
               const carPrice = car['Price'] ?? car['Landing'] ?? '';
@@ -71,15 +72,12 @@ const CarList: React.FC = () => {
                 carPictures = carImgURL;
               }
 
-              if (carName && carGrade && carModelYear) {
-                return { ...car, name: carName, grade: carGrade, model_year: carModelYear, pictures: carPictures, Price: carPrice };
-              }
-              return null;
+              return { ...car, name: carName, grade: carGrade, model_year: carModelYear, pictures: carPictures, Price: carPrice };
             }).filter(Boolean);
             console.log("Processed cars:", processedCars);
             setCars(processedCars as Car[]);
-            setGrades([...new Set(processedCars.map((car: any) => car.grade))]);
-            setModelYears([...new Set(processedCars.map((car: any) => car.model_year))]);
+            setGrades([...new Set(processedCars.map((car: any) => car.grade))].sort());
+            setModelYears([...new Set(processedCars.map((car: any) => car.model_year))].sort());
             setLoading(false);
           },
           error: (error: any) => {
@@ -189,6 +187,13 @@ const CarList: React.FC = () => {
                 Filters
               </button>
             </div>
+            <div className="flex justify-end mb-4">
+              <Link to="/data" state={{ cars: cars }}>
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                  View All Data
+                </button>
+              </Link>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
               {currentItems.map((car, index) => (
                 <Link to={`/car/${car['S.N.']}`} key={index} state={{ car }}>
@@ -196,13 +201,13 @@ const CarList: React.FC = () => {
                     <img src={car.pictures} alt={car.name} className="w-full h-48 md:h-64 object-cover" />
                     <div className="p-4 md:p-6 flex flex-col justify-between h-auto md:h-64 overflow-hidden">
                       <div>
-                        <h2 className="text-lg md:text-2xl font-bold text-gray-800">{car.name}</h2>
+                        <h2 className="text-lg md:text-2xl font-bold text-gray-800">{car.name || 'N/A'}</h2>
                       </div>
                       <div>
-                        <div className="text-lg md:text-xl font-bold text-gray-800 mt-2">৳{car.Price}</div>
+                        <div className="text-lg md:text-xl font-bold text-gray-800 mt-2">৳{car.Price || 'N/A'}</div>
                         <div className="flex justify-between text-base md:text-lg text-gray-700 mt-1">
-                          <span>{car.model_year}</span>
-                          <span>Grade {car.grade}</span>
+                          <span>{car.model_year || 'N/A'}</span>
+                          <span>Grade {car.grade || 'N/A'}</span>
                         </div>
                         <button className="mt-4 w-full bg-[#fe9900] text-white py-2 rounded-md hover:bg-[#ec6f3d] transition duration-300">
                           View Details
@@ -223,11 +228,11 @@ const CarList: React.FC = () => {
                 Previous
               </button>
               <span className="px-3 py-1 md:px-4 md:py-2 mx-1 text-gray-700">
-                Page {currentPage} of {Math.ceil(cars.length / itemsPerPage)}
+                Page {currentPage} of {Math.ceil(filteredCars.length / itemsPerPage)}
               </span>
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
-                disabled={indexOfLastItem >= cars.length}
+                disabled={indexOfLastItem >= filteredCars.length}
                 className="px-3 py-1 md:px-4 md:py-2 mx-1 bg-orange-500 text-white rounded-md disabled:bg-gray-300"
               >
                 Next
