@@ -24,7 +24,7 @@ const BrandLogos: React.FC = () => {
               <img
                 src={`${process.env.PUBLIC_URL}/brands/${brand}`}
                 alt={brand.split('.')[0]}
-                className="h-16 md:h-32 transition duration-300 hover:scale-105 mx-8 md:mx-16" // Added responsive spacing
+                className="h-16 md:h-32 transition duration-300 hover:scale-105 mx-4 md:mx-8" // Added responsive spacing
               />
             </div>
           ))}
