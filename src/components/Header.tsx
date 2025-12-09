@@ -9,9 +9,9 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <a href="/" className="text-2xl font-bold text-gray-800">
-              <img src="/favicon.png" alt="Shahab's Trading Logo" className="h-12 w-auto" />
-            </a>
+            <Link to="/" className="text-2xl font-bold text-gray-800">
+              <img src={`${process.env.PUBLIC_URL}/favicon.png`} alt="Shahab's Trading Logo" className="h-12 w-auto" />
+            </Link>
           </div>
           <div className="hidden md:flex items-center justify-center flex-1">
             <nav>
@@ -30,12 +30,12 @@ const Header = () => {
             </nav>
           </div>
           <div className="hidden md:flex items-center">
-            <a
-              href="/contact"
+            <Link
+              to="/contact"
               className="px-8 py-3 text-lg font-medium text-white bg-[#fe9900] rounded-md hover:bg-[#ec6f3d]"
             >
               Contact us
-            </a>
+            </Link>
           </div>
           <div className="md:hidden">
             <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 hover:text-gray-700 focus:outline-none">
@@ -51,25 +51,25 @@ const Header = () => {
         </div>
         {isOpen && (
           <div className="md:hidden mt-4">
-            <a href="/" className="block px-4 py-2 text-gray-600 hover:bg-gray-200">
+            <Link to="/" className="block px-4 py-2 text-gray-600 hover:bg-gray-200">
               Home
-            </a>
-            <a href="/" className="block px-4 py-2 text-gray-600 hover:bg-gray-200">
+            </Link>
+            <Link to="/about" className="block px-4 py-2 text-gray-600 hover:bg-gray-200">
               About Us
-            </a>
+            </Link>
 
-            <a href="/cars" className="block px-4 py-2 text-gray-600 hover:bg-gray-200">
+            <Link to="/cars" className="block px-4 py-2 text-gray-600 hover:bg-gray-200">
               StockList
-            </a>
+            </Link>
 
 
             <div className="mt-4">
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className="block px-8 py-3 text-lg font-medium text-white bg-orange-500 rounded-md hover:bg-[#d68100] text-center"
               >
                 CONTACT US
-              </a>
+              </Link>
             </div>
           </div>
         )}

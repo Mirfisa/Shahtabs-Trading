@@ -66,7 +66,11 @@ const CarList: React.FC = () => {
               let carPictures = 'https://via.placeholder.com/300x200?text=No+Image'; // Generic placeholder
 
               if (carImgURL) {
-                carPictures = carImgURL;
+                if (carImgURL.startsWith('/')) {
+                  carPictures = `${process.env.PUBLIC_URL}${carImgURL}`;
+                } else {
+                  carPictures = carImgURL;
+                }
               }
               return { ...car, name: carName, grade: carGrade, model_year: carModelYear, pictures: carPictures, Price: carPrice };
             });

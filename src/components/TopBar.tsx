@@ -22,16 +22,16 @@ const TopBar = () => {
         {/* Right Side: Social Media Icons */}
         <div className="flex items-center gap-4">
           <a href="#" aria-label="Facebook" className="text-gray-900 hover:text-white transition-colors duration-200">
-            <img src="/icons/fb.png" alt="" className="social-icon" />
+            <img src={`${process.env.PUBLIC_URL}/icons/fb.png`} alt="" className="social-icon" />
           </a>
           <a href="#" aria-label="Twitter" className="text-gray-900 hover:text-white transition-colors duration-200">
-            <img src="/icons/twitter.png" alt="" className="social-icon" />
+            <img src={`${process.env.PUBLIC_URL}/icons/twitter.png`} alt="" className="social-icon" />
           </a>
           <a href="#" aria-label="LinkedIn" className="text-gray-900 hover:text-white transition-colors duration-200">
-            <img src="/icons/linkedin.png" alt="" className="social-icon" />
+            <img src={`${process.env.PUBLIC_URL}/icons/linkedin.png`} alt="" className="social-icon" />
           </a>
           <a href="#" aria-label="Instagram" className="text-gray-900 hover:text-white transition-colors duration-200">
-            <img src="/icons/insta.png" alt="" className="social-icon" />
+            <img src={`${process.env.PUBLIC_URL}/icons/insta.png`} alt="" className="social-icon" />
           </a>
         </div>
 
