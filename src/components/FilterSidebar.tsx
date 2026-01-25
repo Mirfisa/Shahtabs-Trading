@@ -39,7 +39,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
           id="grade"
           value={filters.grade}
           onChange={handleInputChange}
-          className="mt-1 block w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
         >
           <option value="">All Grades</option>
           {grades.map((grade) => (
@@ -60,7 +60,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
             id="minPrice"
             value={filters.minPrice}
             onChange={handleInputChange}
-            className="mt-1 block w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
             placeholder="Min Price"
             min="0"
           />
@@ -70,7 +70,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
             id="maxPrice"
             value={filters.maxPrice}
             onChange={handleInputChange}
-            className="mt-1 block w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
             placeholder="Max Price"
             max="999999999"
           />
@@ -85,7 +85,7 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
           id="modelYear"
           value={filters.modelYear}
           onChange={handleInputChange}
-          className="mt-1 block w-full px-3 py-2 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
         >
           <option value="">All Years</option>
           {modelYears.map((year) => (
@@ -99,13 +99,13 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
       <div className="flex flex-col space-y-2">
         <button
           onClick={onFilterSubmit}
-          className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition duration-300"
+          className="w-full bg-orange-500 text-white py-1.5 rounded-md hover:bg-orange-600 transition duration-300 text-sm"
         >
           Filter
         </button>
         <button
           onClick={onClearFilters}
-          className="w-full bg-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-400 transition duration-300"
+          className="w-full bg-gray-300 text-gray-700 py-1.5 rounded-md hover:bg-gray-400 transition duration-300 text-sm"
         >
           Clear
         </button>

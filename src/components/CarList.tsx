@@ -190,7 +190,7 @@ const CarList: React.FC = () => {
           {/* Car Grid */}
           <div className="lg:col-span-3">
             <div className="flex justify-between items-center mb-4">
-              <h1 className="text-2xl md:text-4xl font-bold text-center text-gray-800">Our Cars</h1>
+              <h1 className="text-xl md:text-2xl font-bold text-center text-gray-800">Our Cars</h1>
               <button
                 className="lg:hidden bg-orange-500 text-white px-4 py-2 rounded-md"
                 onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -198,29 +198,23 @@ const CarList: React.FC = () => {
                 Filters
               </button>
             </div>
-            <div className="flex justify-end mb-4">
-              <Link to="/data" state={{ cars: cars }}>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">
-                  View All Data
-                </button>
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {currentItems.map((car, index) => (
                 <Link to={`/car/${car['S.N.']}`} key={index} state={{ car }}>
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:scale-105 hover:shadow-xl flex flex-col">
-                    <img src={car.pictures} alt={car.name} className="w-full h-48 md:h-64 object-cover" />
-                    <div className="p-4 md:p-6 flex flex-col justify-between h-auto md:h-64 overflow-hidden">
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
+                    <img src={car.pictures} alt={car.name} className="w-full h-40 md:h-48 object-cover" />
+                    <div className="p-2 md:p-3 flex flex-col flex-grow">
                       <div>
-                        <h2 className="text-lg md:text-2xl font-bold text-gray-800">{car.name || 'N/A'}</h2>
+                        <h2 className="text-sm md:text-base font-bold text-gray-800 line-clamp-2">{car.name || 'N/A'}</h2>
                       </div>
-                      <div>
-                        <div className="text-lg md:text-xl font-bold text-gray-800 mt-2">৳{car.Price || 'N/A'}</div>
-                        <div className="flex justify-between text-base md:text-lg text-gray-700 mt-1">
+                      <div className="mt-auto">
+                        <div className="text-sm md:text-base font-bold text-gray-800 mt-2">৳{car.Price || 'N/A'}</div>
+                        <div className="flex justify-between text-xs md:text-sm text-gray-700 mt-1">
                           <span>{car.model_year || 'N/A'}</span>
                           <span>Grade {car.grade || 'N/A'}</span>
                         </div>
-                        <button className="mt-4 w-full bg-[#fe9900] text-white py-2 rounded-md hover:bg-[#ec6f3d] transition duration-300">
+                        <button className="mt-2 w-full bg-[#fe9900] text-white py-1 rounded-md hover:bg-[#ec6f3d] transition duration-300 text-xs md:text-sm">
                           View Details
                         </button>
                       </div>
@@ -234,17 +228,17 @@ const CarList: React.FC = () => {
               <button
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="px-3 py-1 md:px-4 md:py-2 mx-1 bg-orange-500 text-white rounded-md disabled:bg-gray-300"
+                className="px-2 py-1 md:px-3 md:py-1.5 mx-1 bg-orange-500 text-white rounded-md disabled:bg-gray-300 text-sm"
               >
                 Previous
               </button>
-              <span className="px-3 py-1 md:px-4 md:py-2 mx-1 text-gray-700">
+              <span className="px-2 py-1 md:px-3 md:py-1.5 mx-1 text-gray-700 text-sm">
                 Page {currentPage} of {Math.ceil(filteredCars.length / itemsPerPage)}
               </span>
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={indexOfLastItem >= filteredCars.length}
-                className="px-3 py-1 md:px-4 md:py-2 mx-1 bg-orange-500 text-white rounded-md disabled:bg-gray-300"
+                className="px-2 py-1 md:px-3 md:py-1.5 mx-1 bg-orange-500 text-white rounded-md disabled:bg-gray-300 text-sm"
               >
                 Next
               </button>

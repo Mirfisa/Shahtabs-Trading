@@ -1,34 +1,81 @@
 import React from 'react';
-import './BrandLogos.css'; // Import the new CSS file
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const brands = [
-  'Honda.png',
-  'Lexus.png',
-  'Mazda.png',
-  'Mitsubishi.png',
-  'Nissan.png',
-  'Subaru.png',
-  'Suzuki.png',
-  'Toyota.png'
+  'toyota.png',
+  'honda.png',
+  'nissan.png',
+  'suzuki.png',
+  'mitsubishi.png',
+  'subaru.png',
+  'mazda.png',
+  'lexus.png',
 ];
 
 const BrandLogos: React.FC = () => {
-  const duplicatedBrands = [...brands, ...brands]; // Duplicate the brands
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    swipeToSlide: true,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
+    arrows: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
 
   return (
-    <div className="bg-white py-8 my-8 shadow-md">
-      <div className="scrolling-wrapper">
-        <div className="scrolling-inner">
-          {duplicatedBrands.map((brand, index) => (
-            <div key={index} className="flex-shrink-0">
-              <img
-                src={`${process.env.PUBLIC_URL}/brands/${brand}`}
-                alt={brand.split('.')[0]}
-                className="h-16 md:h-32 transition duration-300 hover:scale-105 mx-4 md:mx-8" // Added responsive spacing
-              />
+    <div className="bg-white py-4 my-4 shadow-md overflow-hidden">
+      <div className="container mx-auto px-4">
+        <Slider {...settings}>
+          {brands.map((brand, index) => (
+            <div key={index} className="px-2 focus:outline-none">
+              <div className="flex items-center justify-center h-20">
+                <img
+                  src={`${process.env.PUBLIC_URL}/brands/${brand}`}
+                  alt={brand.split('.')[0]}
+                  className="h-12 md:h-16 object-contain transition duration-300 hover:scale-110 cursor-grab active:cursor-grabbing"
+                  loading="lazy"
+                />
+              </div>
             </div>
           ))}
-        </div>
+        </Slider>
       </div>
     </div>
   );

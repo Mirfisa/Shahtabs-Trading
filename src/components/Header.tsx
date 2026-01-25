@@ -6,33 +6,39 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-6 py-2">
         <div className="flex items-center justify-between">
           <div>
             <Link to="/" className="text-2xl font-bold text-gray-800">
-              <img src={`${process.env.PUBLIC_URL}/favicon.png`} alt="Shahab's Trading Logo" className="h-12 w-auto" />
+              <img src={`${process.env.PUBLIC_URL}/favicon.png`} alt="Shahab's Trading Logo" className="h-10 w-auto" />
             </Link>
           </div>
           <div className="hidden md:flex items-center justify-center flex-1">
             <nav>
-              <Link to="/" className="mx-4 text-gray-600 hover:text-gray-700 font-semibold transition duration-700 hover:scale-115 hover:shadow-lg hover:font-bold">
+              <Link to="/" className="mx-2 text-sm text-gray-600 hover:text-gray-700 font-semibold transition duration-700 hover:scale-115 hover:shadow-lg hover:font-bold">
                 Home
               </Link>
-              <Link to="/about" className="mx-4 text-gray-600 hover:text-gray-700 font-semibold transition duration-700 hover:scale-115 hover:shadow-lg hover:font-bold">
+              <Link to="/about" className="mx-2 text-sm text-gray-600 hover:text-gray-700 font-semibold transition duration-700 hover:scale-115 hover:shadow-lg hover:font-bold">
                 About Us
               </Link>
 
-              <Link to="/cars" className="mx-4 text-gray-600 hover:text-gray-700 font-semibold transition duration-700 hover:scale-115 hover:shadow-lg hover:font-bold">
+              <Link to="/cars" className="mx-2 text-sm text-gray-600 hover:text-gray-700 font-semibold transition duration-700 hover:scale-115 hover:shadow-lg hover:font-bold">
                 StockList
               </Link>
 
 
             </nav>
           </div>
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center space-x-4">
+            <Link
+              to="/data"
+              className="px-4 py-2 text-sm font-medium text-blue-500 border border-blue-500 rounded-md hover:bg-blue-50"
+            >
+              View All Data
+            </Link>
             <Link
               to="/contact"
-              className="px-8 py-3 text-lg font-medium text-white bg-[#fe9900] rounded-md hover:bg-[#ec6f3d]"
+              className="px-4 py-2 text-sm font-medium text-white bg-[#fe9900] rounded-md hover:bg-[#ec6f3d]"
             >
               Contact us
             </Link>
@@ -63,10 +69,18 @@ const Header = () => {
             </Link>
 
 
+            <div className="mt-4 px-4">
+              <Link
+                to="/data"
+                className="block py-1.5 text-sm font-medium text-blue-500 border border-blue-500 rounded-md hover:bg-blue-50 text-center"
+              >
+                View All Data
+              </Link>
+            </div>
             <div className="mt-4">
               <Link
                 to="/contact"
-                className="block px-8 py-3 text-lg font-medium text-white bg-orange-500 rounded-md hover:bg-[#d68100] text-center"
+                className="block px-4 py-1.5 text-sm font-medium text-white bg-orange-500 rounded-md hover:bg-[#d68100] text-center"
               >
                 CONTACT US
               </Link>

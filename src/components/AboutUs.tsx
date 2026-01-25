@@ -25,8 +25,8 @@ const AboutUs: React.FC = () => {
                             </h2>
                             <div className="h-1.5 w-16 bg-orange-500 mt-2"></div>
                         </div>
-                        
-                        <p className="text-lg text-gray-700 leading-relaxed">
+
+                        <p className="text-lg text-gray-700 leading-relaxed text-justify">
                             <span className="font-semibold">Shahtab's Trading</span> is a premier car import and dealership company based in
                             Bangladesh. Renowned for its commitment to quality and customer
                             satisfaction, Shahtab's Trading has established itself as a trusted name in the
@@ -34,8 +34,8 @@ const AboutUs: React.FC = () => {
                             brands, including Toyota, Honda, Nissan, and many more, the company caters
                             to the diverse needs of car enthusiasts and buyers in Bangladesh.
                         </p>
-                        
-                        <p className="text-lg text-gray-700 leading-relaxed">
+
+                        <p className="text-lg text-gray-700 leading-relaxed text-justify">
                             Shahtab's Trading aims to provide high-quality vehicles and exceptional
                             customer service, ensuring a seamless and trustworthy car-buying experience.
                             The company is dedicated to maintaining the highest standards of integrity and
