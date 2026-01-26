@@ -25,3 +25,12 @@ body {
 .social-icon {
   filter: brightness(0.5) contrast(1.5);
 }
+
+/* Hero Carousel Custom Styles */
+.hero-carousel {
+  margin-bottom: 60px !important;
+}
+
+.hero-carousel .slick-dots {
+  bottom: -40px !important;
+}

@@ -38,7 +38,7 @@ const Carousel: React.FC<CarouselProps> = ({ slides }) => {
 
   return (
     <div className="relative">
-      <Slider {...settings}>
+      <Slider {...settings} className="hero-carousel">
         {slides.map((slide, index) => (
           <div key={slide.id} className="relative">
             <img
