@@ -4,14 +4,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const brands = [
-  'toyota.png',
-  'honda.png',
-  'nissan.png',
-  'suzuki.png',
-  'mitsubishi.png',
-  'subaru.png',
-  'mazda.png',
-  'lexus.png',
+  'Toyota.png',
+  'Honda.png',
+  'Nissan.png',
+  'Suzuki.png',
+  'Mitsubishi.png',
+  'Subaru.png',
+  'Mazda.png',
+  'Lexus.png',
 ];
 
 const BrandLogos: React.FC = () => {
