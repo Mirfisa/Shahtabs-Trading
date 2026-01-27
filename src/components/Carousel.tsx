@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from 'react-slick';
-import { CarouselProps, Slide } from '../types';
+import { CarouselProps } from '../types';
 
 const NextArrow = (props: any) => {
   const { onClick } = props;
