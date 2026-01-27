@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Shahtabs-Trading/static/css/main.2c525c84.css",
-    "main.js": "/Shahtabs-Trading/static/js/main.ce8b1f61.js",
+    "main.js": "/Shahtabs-Trading/static/js/main.b2dd6c3f.js",
     "static/js/453.fd7fbc80.chunk.js": "/Shahtabs-Trading/static/js/453.fd7fbc80.chunk.js",
     "static/media/slick.svg": "/Shahtabs-Trading/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/Shahtabs-Trading/static/media/slick.a4e97f5a2a64f0ab1323.eot",
@@ -9,11 +9,11 @@
     "static/media/slick.woff": "/Shahtabs-Trading/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/Shahtabs-Trading/index.html",
     "main.2c525c84.css.map": "/Shahtabs-Trading/static/css/main.2c525c84.css.map",
-    "main.ce8b1f61.js.map": "/Shahtabs-Trading/static/js/main.ce8b1f61.js.map",
+    "main.b2dd6c3f.js.map": "/Shahtabs-Trading/static/js/main.b2dd6c3f.js.map",
     "453.fd7fbc80.chunk.js.map": "/Shahtabs-Trading/static/js/453.fd7fbc80.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2c525c84.css",
-    "static/js/main.ce8b1f61.js"
+    "static/js/main.b2dd6c3f.js"
   ]
 }
