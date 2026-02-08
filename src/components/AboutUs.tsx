@@ -9,7 +9,7 @@ const AboutUs: React.FC = () => {
                     <div className="w-full md:w-1/2">
                         <div className="relative rounded-2xl overflow-hidden shadow-xl">
                             <img
-                                src={`/about_us_combined.png`}
+                                src={`${import.meta.env.BASE_URL}about_us_combined.png`}
                                 alt="Luxury Car Showroom"
                                 className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
                             />

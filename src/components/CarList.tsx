@@ -78,7 +78,7 @@ const CarList: React.FC = () => {
               // Priority 2: Use imgURL if no Drive Image
               else if (carImgURL) {
                 if (carImgURL.startsWith('/')) {
-                  carPictures = `${carImgURL}`;
+                  carPictures = `${import.meta.env.BASE_URL}${carImgURL.startsWith('/') ? carImgURL.slice(1) : carImgURL}`;
                 } else {
                   carPictures = carImgURL;
                 }

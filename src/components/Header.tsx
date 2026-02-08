@@ -10,7 +10,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div>
             <Link to="/" className="text-2xl font-bold text-gray-800">
-              <img src={`/favicon.png`} alt="Shahab's Trading Logo" className="h-10 w-auto" />
+              <img src={`${import.meta.env.BASE_URL}favicon.png`} alt="Shahab's Trading Logo" className="h-10 w-auto" />
             </Link>
           </div>
           <div className="hidden md:flex items-center justify-center flex-1">
