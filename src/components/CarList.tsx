@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
 import FilterSidebar from './FilterSidebar';
+import CarCardImage from './CarCardImage';
 
 interface Car {
   'S.N.': string;
@@ -62,12 +63,22 @@ const CarList: React.FC = () => {
               const carGrade = car['Grade'] ? car['Grade'].trim() : '';
               const carModelYear = car['Model'];
               const carImgURL = car['imgURL'];
+              const driveImage = car['Drive Image'] || '';
               const carPrice = car['Price'] ?? car['Landing'] ?? '';
               let carPictures = 'https://via.placeholder.com/300x200?text=No+Image'; // Generic placeholder
 
-              if (carImgURL) {
+              // Priority 1: Use first image from Drive Image (pipe-separated URLs)
+              if (driveImage && driveImage.includes('thumbnail')) {
+                const urls = driveImage.split('|').map((url: string) => url.trim());
+                const validUrls = urls.filter((url: string) => url.startsWith('http'));
+                if (validUrls.length > 0) {
+                  carPictures = validUrls[0];
+                }
+              }
+              // Priority 2: Use imgURL if no Drive Image
+              else if (carImgURL) {
                 if (carImgURL.startsWith('/')) {
-                  carPictures = `${process.env.PUBLIC_URL}${carImgURL}`;
+                  carPictures = `${carImgURL}`;
                 } else {
                   carPictures = carImgURL;
                 }
@@ -203,7 +214,11 @@ const CarList: React.FC = () => {
               {currentItems.map((car, index) => (
                 <Link to={`/car/${car['S.N.']}`} key={index} state={{ car }}>
                   <div className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
-                    <img src={car.pictures} alt={car.name} className="w-full h-40 md:h-48 object-cover" />
+                    <CarCardImage
+                      driveImages={car['Drive Image'] || ''}
+                      fallbackImage={car.pictures}
+                      altText={car.name}
+                    />
                     <div className="p-2 md:p-3 flex flex-col flex-grow">
                       <div>
                         <h2 className="text-sm md:text-base font-bold text-gray-800 line-clamp-2">{car.name || 'N/A'}</h2>

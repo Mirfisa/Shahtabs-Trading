@@ -67,7 +67,7 @@ const BrandLogos: React.FC = () => {
             <div key={index} className="px-2 focus:outline-none">
               <div className="flex items-center justify-center h-20">
                 <img
-                  src={`${process.env.PUBLIC_URL}/brands/${brand}`}
+                  src={`/brands/${brand}`}
                   alt={brand.split('.')[0]}
                   className="h-12 md:h-16 object-contain transition duration-300 hover:scale-110 cursor-grab active:cursor-grabbing"
                   loading="lazy"
