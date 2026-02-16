@@ -3,6 +3,7 @@ import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
 import FilterSidebar from './FilterSidebar';
 import CarCardImage from './CarCardImage';
+import { processDriveUrl, parseImageField } from '../utils/imageParser';
 
 interface Car {
   'S.N.': string;
@@ -21,6 +22,7 @@ interface Car {
   'Picture': string;
   'Status': string;
   'Drive Image': string;
+  'Thumbnail Pic': string;
   name: string;
   grade: string;
   model_year: string;
@@ -46,7 +48,7 @@ const CarList: React.FC = () => {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const response = await fetch('https://docs.google.com/spreadsheets/d/1uqwgVOtPtRQErRoRM8D5659b0_4mVZ8eI3hiwzGgYlU/export?format=csv');
+        const response = await fetch('https://docs.google.com/spreadsheets/d/1ayiLeXDHGAIFlvcMGQyo4QAmH_N4wRckcfAHqMlirTs/export?format=csv');
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -63,19 +65,34 @@ const CarList: React.FC = () => {
               const carGrade = car['Grade'] ? car['Grade'].trim() : '';
               const carModelYear = car['Model'];
               const carImgURL = car['imgURL'];
-              const driveImage = car['Drive Image'] || '';
+              const thumbnailPic = car['Thumbnail Pic'];
+              let driveImage = car['Drive Image'] || '';
               const carPrice = car['Price'] ?? car['Landing'] ?? '';
               let carPictures = 'https://via.placeholder.com/300x200?text=No+Image'; // Generic placeholder
 
-              // Priority 1: Use first image from Drive Image (pipe-separated URLs)
-              if (driveImage && driveImage.includes('thumbnail')) {
-                const urls = driveImage.split('|').map((url: string) => url.trim());
-                const validUrls = urls.filter((url: string) => url.startsWith('http'));
+              const allImages = car['All Images'] ? car['All Images'].trim() : '';
+
+              // Priority 1: Use Thumbnail Pic from sheet
+              if (thumbnailPic && thumbnailPic.trim() !== '') {
+                carPictures = processDriveUrl(thumbnailPic.trim());
+              }
+              // Priority 2: Use All Images
+              else if (allImages) {
+                const validUrls = parseImageField(allImages);
+
+                if (validUrls.length > 0) {
+                  driveImage = validUrls.join('|');
+                  carPictures = validUrls[0];
+                }
+              }
+              // Priority 3: Use existing Drive Image (pipe-separated URLs) (Fallthrough)
+              else if (driveImage) { // Check if driveImage exists content
+                const validUrls = parseImageField(driveImage);
                 if (validUrls.length > 0) {
                   carPictures = validUrls[0];
                 }
               }
-              // Priority 2: Use imgURL if no Drive Image
+              // Priority 4: Use imgURL if no Drive Image
               else if (carImgURL) {
                 if (carImgURL.startsWith('/')) {
                   carPictures = `${import.meta.env.BASE_URL}${carImgURL.startsWith('/') ? carImgURL.slice(1) : carImgURL}`;
@@ -83,7 +100,7 @@ const CarList: React.FC = () => {
                   carPictures = carImgURL;
                 }
               }
-              return { ...car, name: carName, grade: carGrade, model_year: carModelYear, pictures: carPictures, Price: carPrice };
+              return { ...car, name: carName, grade: carGrade, model_year: carModelYear, pictures: carPictures, Price: carPrice, 'Drive Image': driveImage, 'Thumbnail Pic': thumbnailPic };
             });
 
             // Deduplication logic
@@ -95,6 +112,19 @@ const CarList: React.FC = () => {
               }
             });
             const uniqueCars = Array.from(uniqueCarsMap.values());
+
+            // Sort logic: Available/Unsold cars first
+            uniqueCars.sort((a: any, b: any) => {
+              const statusA = (a.Status || '').toLowerCase();
+              const statusB = (b.Status || '').toLowerCase();
+
+              const isAvailableA = statusA !== 'sold' && statusA !== '';
+              const isAvailableB = statusB !== 'sold' && statusB !== '';
+
+              if (isAvailableA && !isAvailableB) return -1;
+              if (!isAvailableA && isAvailableB) return 1;
+              return 0;
+            });
 
             console.log("Processed cars (unique):", uniqueCars);
             setCars(uniqueCars as Car[]);
@@ -224,9 +254,16 @@ const CarList: React.FC = () => {
                         <h2 className="text-sm md:text-base font-bold text-gray-800 line-clamp-2">{car.name || 'N/A'}</h2>
                       </div>
                       <div className="mt-auto">
-                        <div className="text-sm md:text-base font-bold text-gray-800 mt-2">৳{car.Price || 'N/A'}</div>
-                        <div className="flex justify-between text-xs md:text-sm text-gray-700 mt-1">
+                        {/* Price removed as per request */}
+                        {/* <div className="text-sm md:text-base font-bold text-gray-800 mt-2">৳{car.Price || 'N/A'}</div> */}
+                        <div className="flex justify-between items-center text-xs md:text-sm text-gray-700 mt-1 space-x-2">
                           <span>{car.model_year || 'N/A'}</span>
+                          <span className={`px-2 py-0.5 rounded font-bold text-[10px] md:text-xs uppercase flex-shrink-0 ${(car.Status || '').toLowerCase() === 'sold'
+                            ? 'bg-red-500 text-white'
+                            : 'bg-green-500 text-white'
+                            }`}>
+                            {car.Status || 'Available'}
+                          </span>
                           <span>Grade {car.grade || 'N/A'}</span>
                         </div>
                         <button className="mt-2 w-full bg-[#fe9900] text-white py-1 rounded-md hover:bg-[#ec6f3d] transition duration-300 text-xs md:text-sm">

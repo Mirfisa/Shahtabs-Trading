@@ -17,7 +17,7 @@ const DataPage: React.FC = () => {
           // or assume it's available. Since it's used in CarList, it should be installed.
           const Papa = await import('papaparse');
 
-          const response = await fetch('https://docs.google.com/spreadsheets/d/1uqwgVOtPtRQErRoRM8D5659b0_4mVZ8eI3hiwzGgYlU/export?format=csv');
+          const response = await fetch('https://docs.google.com/spreadsheets/d/1ayiLeXDHGAIFlvcMGQyo4QAmH_N4wRckcfAHqMlirTs/export?format=csv');
           if (!response.ok) {
             throw new Error('Failed to fetch data');
           }
