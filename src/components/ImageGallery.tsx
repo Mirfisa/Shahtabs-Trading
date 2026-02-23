@@ -39,6 +39,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, altText }) => {
         swipe: true,
         asNavFor: nav2 || undefined,
         adaptiveHeight: true,
+        lazyLoad: "anticipated" as const,
     };
 
     const thumbSettings = {
@@ -53,6 +54,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, altText }) => {
         centerMode: false,
         variableWidth: true,
         swipeToSlide: true,
+        lazyLoad: "ondemand" as const,
     };
 
 
@@ -69,6 +71,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, altText }) => {
                                     src={url}
                                     alt={`${altText} - ${index + 1}`}
                                     className="max-w-full max-h-full object-contain"
+                                    loading={index === 0 ? "eager" : "lazy"}
+                                    // @ts-ignore
+                                    fetchpriority={index === 0 ? "high" : "auto"}
                                 />
                             </div>
                         </div>
@@ -84,9 +89,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, altText }) => {
                             <div key={index} className="px-1 outline-none">
                                 <div className="w-24 h-16 cursor-pointer bg-gray-200 rounded-md overflow-hidden border-2 border-transparent hover:border-orange-500 box-border">
                                     <img
-                                        src={url}
+                                        src={url.includes('lh3.googleusercontent.com') ? url.replace('=w1000', '=w200') : url}
                                         alt={`Thumbnail ${index + 1}`}
                                         className="w-full h-full object-cover"
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
                             </div>

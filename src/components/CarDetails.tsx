@@ -21,19 +21,34 @@ const CarDetails: React.FC = () => {
     const combinedUrls = [...allImageUrls, ...driveImageUrls];
     const uniqueUrls = [...new Set(combinedUrls)];
 
-    if (uniqueUrls.length > 0) {
-      return uniqueUrls;
-    }
-
-    // Otherwise fall back to the main picture
+    // Prepend the main picture (thumbnail) if it exists, ensuring it's shown first
     if (car.pictures && car.pictures.startsWith('http')) {
-      return [car.pictures];
+      const filteredUrls = uniqueUrls.filter(url => url !== car.pictures);
+      return [car.pictures, ...filteredUrls];
     }
 
-    return [];
+    return uniqueUrls;
   };
 
   const images = parseImages();
+
+  const handleContactUs = () => {
+    const rawPhoneNumber = "+88 01947494174";
+
+    const formatPhoneNumber = (num: string) => {
+      return num.replace(/[\s\-+]/g, '');
+    };
+
+    const formattedNumber = formatPhoneNumber(rawPhoneNumber);
+    const carName = car?.name || 'this car';
+    const chassisNumber = car?.['Chasis Number'] || 'N/A';
+
+    const message = `Hello I'd like to know more about ${carName}, Chassis number: ${chassisNumber}.`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${formattedNumber}?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <div className="bg-gray-100 py-6 md:py-12">
@@ -105,7 +120,10 @@ const CarDetails: React.FC = () => {
                 </div>
               </div>
               <div className="mt-6">
-                <button className="w-full bg-[#fe9900] text-white font-bold py-3 rounded-md hover:bg-[#ec6f3d] transition duration-300 uppercase">
+                <button
+                  onClick={handleContactUs}
+                  className="w-full bg-[#fe9900] text-white font-bold py-3 rounded-md hover:bg-[#ec6f3d] transition duration-300 uppercase"
+                >
                   Contact Us
                 </button>
               </div>
