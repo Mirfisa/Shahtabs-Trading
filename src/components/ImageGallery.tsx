@@ -1,6 +1,61 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Slider from 'react-slick';
 
+interface RetryImageProps {
+    src: string;
+    alt: string;
+    className?: string;
+    loading?: "eager" | "lazy";
+    decoding?: "async" | "sync" | "auto";
+    fetchpriority?: "high" | "low" | "auto";
+}
+
+const RetryImage: React.FC<RetryImageProps> = ({ src, alt, className, loading, decoding, fetchpriority }) => {
+    const [retryCount, setRetryCount] = useState(0);
+    const [hasError, setHasError] = useState(false);
+
+    useEffect(() => {
+        setRetryCount(0);
+        setHasError(false);
+    }, [src]);
+
+    const handleError = () => {
+        if (retryCount < 3) {
+            // Google Drive 403 rate limit backoff (400ms, 600ms, 800ms...)
+            setTimeout(() => {
+                setRetryCount(prev => prev + 1);
+            }, 400 + (retryCount * 200));
+        } else {
+            setHasError(true);
+        }
+    };
+
+    if (hasError) {
+        return (
+            <div className={`flex items-center justify-center bg-gray-200 ${className}`}>
+                <span className="text-gray-400 text-xs text-center p-2">Image unavailable</span>
+            </div>
+        );
+    }
+
+    const srcWithRetry = retryCount > 0
+        ? `${src}${src.includes('?') ? '&' : '?'}retry=${retryCount}`
+        : src;
+
+    return (
+        <img
+            src={srcWithRetry}
+            alt={alt}
+            className={className}
+            loading={loading}
+            decoding={decoding}
+            onError={handleError}
+            // @ts-ignore
+            fetchpriority={fetchpriority}
+        />
+    );
+};
+
 interface ImageGalleryProps {
     images: string[];
     altText: string;
@@ -67,12 +122,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, altText }) => {
                     {validImages.map((url, index) => (
                         <div key={index} className="outline-none">
                             <div className="flex items-center justify-center h-[50vh] md:h-[70vh] bg-black">
-                                <img
+                                <RetryImage
                                     src={url}
                                     alt={`${altText} - ${index + 1}`}
                                     className="max-w-full max-h-full object-contain"
                                     loading={index === 0 ? "eager" : "lazy"}
-                                    // @ts-ignore
                                     fetchpriority={index === 0 ? "high" : "auto"}
                                 />
                             </div>
@@ -88,7 +142,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images, altText }) => {
                         {validImages.map((url, index) => (
                             <div key={index} className="px-1 outline-none">
                                 <div className="w-24 h-16 cursor-pointer bg-gray-200 rounded-md overflow-hidden border-2 border-transparent hover:border-orange-500 box-border">
-                                    <img
+                                    <RetryImage
                                         src={url.includes('lh3.googleusercontent.com') ? url.replace('=w1000', '=w200') : url}
                                         alt={`Thumbnail ${index + 1}`}
                                         className="w-full h-full object-cover"
