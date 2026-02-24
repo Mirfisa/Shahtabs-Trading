@@ -1,11 +1,24 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ImageGallery from './ImageGallery';
 import { parseImageField } from '../utils/imageParser';
 
 const CarDetails: React.FC = () => {
   const location = useLocation();
-  const { car } = location.state;
+  const navigate = useNavigate();
+  const { car, allCars, carIndex } = location.state || {};
+
+  const hasList = Array.isArray(allCars) && allCars.length > 0;
+  const prevCar = hasList && carIndex > 0 ? allCars[carIndex - 1] : null;
+  const nextCar = hasList && carIndex < allCars.length - 1 ? allCars[carIndex + 1] : null;
+
+  const handleBack = () => navigate(-1);
+
+  const handleNavigateCar = (targetCar: any, newIndex: number) => {
+    navigate(`/car/${targetCar['S.N.']}`, {
+      state: { car: targetCar, allCars, carIndex: newIndex }
+    });
+  };
 
   const parseImages = (): string[] => {
     const allImagesField = car['All Images'] || '';
@@ -53,6 +66,17 @@ const CarDetails: React.FC = () => {
   return (
     <div className="bg-gray-100 py-6 md:py-12">
       <div className="container mx-auto px-4">
+
+        {/* Back Button - Top */}
+        <div className="mb-4">
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition"
+          >
+            ← Back
+          </button>
+        </div>
+
         <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col lg:flex-row">
           {/* Left Side - Image Gallery (70%) */}
           <div className="w-full lg:w-[70%] bg-black">
@@ -76,12 +100,16 @@ const CarDetails: React.FC = () => {
                   </span>
                 </div>
                 <div className="flex border-b border-gray-300 pb-2">
+                  <span className="font-bold w-1/3">Year:</span>
+                  <span className="w-2/3">{car['Year'] || car.year || 'N/A'}</span>
+                </div>
+                <div className="flex border-b border-gray-300 pb-2">
                   <span className="font-bold w-1/3">Model:</span>
-                  <span className="w-2/3">{car.model_year || 'N/A'}</span>
+                  <span className="w-2/3">{car['Model'] || car.model || 'N/A'}</span>
                 </div>
                 <div className="flex border-b border-gray-300 pb-2">
                   <span className="font-bold w-1/3">Grade:</span>
-                  <span className="w-2/3">{car.grade || 'N/A'}</span>
+                  <span className="w-2/3">{car.grade || car['Grade'] || 'N/A'}</span>
                 </div>
                 <div className="flex border-b border-gray-300 pb-2">
                   <span className="font-bold w-1/3">Chassis:</span>
@@ -96,21 +124,11 @@ const CarDetails: React.FC = () => {
                   <span className="w-2/3">{car.Mileage || 'N/A'}</span>
                 </div>
                 <div className="flex border-b border-gray-300 pb-2">
-                  <span className="font-bold w-1/3">Engine:</span>
-                  <span className="w-2/3">{car.Engine || 'N/A'}</span>
+                  <span className="font-bold w-1/3">Engine CC:</span>
+                  <span className="w-2/3">{car['Engine CC'] || car.engine || 'N/A'}</span>
                 </div>
-                <div className="flex border-b border-gray-300 pb-2">
-                  <span className="font-bold w-1/3">Fuel:</span>
-                  <span className="w-2/3">{car.Fuel || 'N/A'}</span>
-                </div>
-                <div className="flex border-b border-gray-300 pb-2">
-                  <span className="font-bold w-1/3">Landing:</span>
-                  <span className="w-2/3">{car.Landing || 'N/A'}</span>
-                </div>
-                <div className="flex border-b border-gray-300 pb-2">
-                  <span className="font-bold w-1/3">Location:</span>
-                  <span className="w-2/3">{car.Location || 'N/A'}</span>
-                </div>
+
+
 
                 <div className="mt-4">
                   <span className="font-bold block mb-1">Details:</span>
@@ -129,6 +147,24 @@ const CarDetails: React.FC = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Prev/Next Buttons - Bottom */}
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={() => prevCar && handleNavigateCar(prevCar, carIndex - 1)}
+            disabled={!prevCar}
+            className="px-5 py-2 text-sm rounded-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          >
+            ← Prev Car
+          </button>
+          <button
+            onClick={() => nextCar && handleNavigateCar(nextCar, carIndex + 1)}
+            disabled={!nextCar}
+            className="px-5 py-2 text-sm rounded-md bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          >
+            Next Car →
+          </button>
         </div>
       </div>
     </div>

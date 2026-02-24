@@ -2,16 +2,18 @@ import React from 'react';
 
 interface FilterSidebarProps {
   filters: {
+    model: string;
+    year: string;
+    engine: string;
     grade: string;
-    minPrice: string;
-    maxPrice: string;
-    modelYear: string;
   };
   onFilterChange: (filters: any) => void;
   onFilterSubmit: () => void;
   onClearFilters: () => void;
   grades: string[];
-  modelYears: string[];
+  models: string[];
+  years: string[];
+  engines: string[];
 }
 
 const FilterSidebar: React.FC<FilterSidebarProps> = ({
@@ -20,7 +22,9 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
   onFilterSubmit,
   onClearFilters,
   grades,
-  modelYears,
+  models,
+  years,
+  engines,
 }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -30,6 +34,44 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">Filters</h2>
+
+      {/* Model Filter */}
+      <div className="mb-6">
+        <label htmlFor="model" className="block text-sm font-medium text-gray-700">Model</label>
+        <select
+          name="model"
+          id="model"
+          value={filters.model}
+          onChange={handleInputChange}
+          className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+        >
+          <option value="">All Models</option>
+          {models.map((model) => (
+            <option key={model} value={model}>
+              {model}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Year Filter */}
+      <div className="mb-6">
+        <label htmlFor="year" className="block text-sm font-medium text-gray-700">Year</label>
+        <select
+          name="year"
+          id="year"
+          value={filters.year}
+          onChange={handleInputChange}
+          className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+        >
+          <option value="">All Years</option>
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* Grade Filter */}
       <div className="mb-6">
@@ -50,47 +92,20 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </select>
       </div>
 
-      {/* Price Range Filter */}
+      {/* Engine CC Filter */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-gray-700">Price Range</label>
-        <div className="flex space-x-2">
-          <input
-            type="number"
-            name="minPrice"
-            id="minPrice"
-            value={filters.minPrice}
-            onChange={handleInputChange}
-            className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-            placeholder="Min Price"
-            min="0"
-          />
-          <input
-            type="number"
-            name="maxPrice"
-            id="maxPrice"
-            value={filters.maxPrice}
-            onChange={handleInputChange}
-            className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-            placeholder="Max Price"
-            max="999999999"
-          />
-        </div>
-      </div>
-
-      {/* Model Year Filter */}
-      <div className="mb-6">
-        <label htmlFor="modelYear" className="block text-sm font-medium text-gray-700">Model Year</label>
+        <label htmlFor="engine" className="block text-sm font-medium text-gray-700">Engine CC</label>
         <select
-          name="modelYear"
-          id="modelYear"
-          value={filters.modelYear}
+          name="engine"
+          id="engine"
+          value={filters.engine}
           onChange={handleInputChange}
           className="mt-1 block w-full px-2 py-1 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
         >
-          <option value="">All Years</option>
-          {modelYears.map((year) => (
-            <option key={year} value={year}>
-              {year}
+          <option value="">All Engine CC</option>
+          {engines.map((engine) => (
+            <option key={engine} value={engine}>
+              {engine}
             </option>
           ))}
         </select>

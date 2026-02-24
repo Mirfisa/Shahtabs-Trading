@@ -25,7 +25,9 @@ interface Car {
   'Thumbnail Pic': string;
   name: string;
   grade: string;
-  model_year: string;
+  model: string;
+  year: string;
+  engine: string;
   pictures: string;
 }
 
@@ -42,14 +44,16 @@ const CarList: React.FC = () => {
   const [filters, setFilters] = useState(() => {
     const saved = sessionStorage.getItem('carListFilters');
     return saved ? JSON.parse(saved) : {
+      model: '',
+      year: '',
+      engine: '',
       grade: '',
-      minPrice: '',
-      maxPrice: '',
-      modelYear: '',
     };
   });
   const [grades, setGrades] = useState<string[]>([]);
-  const [modelYears, setModelYears] = useState<string[]>([]);
+  const [models, setModels] = useState<string[]>([]);
+  const [years, setYears] = useState<string[]>([]);
+  const [engines, setEngines] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -70,7 +74,9 @@ const CarList: React.FC = () => {
             const processedCars = results.data.map((car: any) => {
               const carName = car['Car Name'];
               const carGrade = car['Grade'] ? car['Grade'].trim() : '';
-              const carModelYear = car['Model'];
+              const carModel = car['Model'] ? String(car['Model']).trim() : '';
+              const carYear = car['Year'] ? String(car['Year']).trim() : '';
+              const carEngine = car['Engine CC'] ? String(car['Engine CC']).trim() : '';
               const carImgURL = car['imgURL'];
               const thumbnailPic = car['Thumbnail Pic'];
               let driveImage = car['Drive Image'] || '';
@@ -107,7 +113,7 @@ const CarList: React.FC = () => {
                   carPictures = carImgURL;
                 }
               }
-              return { ...car, name: carName, grade: carGrade, model_year: carModelYear, pictures: carPictures, Price: carPrice, 'Drive Image': driveImage, 'Thumbnail Pic': thumbnailPic };
+              return { ...car, name: carName, grade: carGrade, model: carModel, year: carYear, engine: carEngine, pictures: carPictures, Price: carPrice, 'Drive Image': driveImage, 'Thumbnail Pic': thumbnailPic };
             });
 
             // Deduplication logic
@@ -135,8 +141,10 @@ const CarList: React.FC = () => {
 
             console.log("Processed cars (unique):", uniqueCars);
             setCars(uniqueCars as Car[]);
-            setGrades([...new Set(uniqueCars.map((car: any) => car.grade))].sort());
-            setModelYears([...new Set(uniqueCars.map((car: any) => car.model_year))].sort());
+            setGrades([...new Set(uniqueCars.map((car: any) => car.grade).filter(Boolean))].sort());
+            setModels([...new Set(uniqueCars.map((car: any) => car.model).filter(Boolean))].sort());
+            setYears([...new Set(uniqueCars.map((car: any) => car.year).filter(Boolean))].sort());
+            setEngines([...new Set(uniqueCars.map((car: any) => car.engine).filter(Boolean))].sort());
             setLoading(false);
           },
           error: (error: any) => {
@@ -155,10 +163,10 @@ const CarList: React.FC = () => {
   const [activeFilters, setActiveFilters] = useState(() => {
     const saved = sessionStorage.getItem('carListActiveFilters');
     return saved ? JSON.parse(saved) : {
+      model: '',
+      year: '',
+      engine: '',
       grade: '',
-      minPrice: '',
-      maxPrice: '',
-      modelYear: '',
     };
   });
 
@@ -185,22 +193,22 @@ const CarList: React.FC = () => {
 
   const handleClearFilters = () => {
     const clearedFilters = {
+      model: '',
+      year: '',
+      engine: '',
       grade: '',
-      minPrice: '',
-      maxPrice: '',
-      modelYear: '',
     };
     setFilters(clearedFilters);
     setActiveFilters(clearedFilters);
   };
 
   const filteredCars = cars.filter((car) => {
-    const { grade, minPrice, maxPrice, modelYear } = activeFilters;
+    const { model, year, engine, grade } = activeFilters;
     return (
-      (grade ? car.grade === grade : true) &&
-      (minPrice ? parseFloat(car.Price) >= parseFloat(minPrice) : true) &&
-      (maxPrice ? parseFloat(car.Price) <= parseFloat(maxPrice) : true) &&
-      (modelYear ? car.model_year === modelYear : true)
+      (model ? car.model === model : true) &&
+      (year ? car.year === year : true) &&
+      (engine ? car.engine === engine : true) &&
+      (grade ? car.grade === grade : true)
     );
   });
 
@@ -246,7 +254,9 @@ const CarList: React.FC = () => {
               onFilterSubmit={handleFilterSubmit}
               onClearFilters={handleClearFilters}
               grades={grades}
-              modelYears={modelYears}
+              models={models}
+              years={years}
+              engines={engines}
             />
           </div>
 
@@ -264,7 +274,11 @@ const CarList: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {currentItems.map((car, index) => (
-                <Link to={`/car/${car['S.N.']}`} key={index} state={{ car }}>
+                <Link
+                  to={`/car/${car['S.N.']}`}
+                  key={index}
+                  state={{ car, allCars: filteredCars, carIndex: filteredCars.findIndex(c => c['S.N.'] === car['S.N.']) }}
+                >
                   <div className="bg-white rounded-lg shadow-md overflow-hidden transition duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
                     <CarCardImage
                       driveImages={car['Drive Image'] || ''}
@@ -279,7 +293,7 @@ const CarList: React.FC = () => {
                         {/* Price removed as per request */}
                         {/* <div className="text-sm md:text-base font-bold text-gray-800 mt-2">৳{car.Price || 'N/A'}</div> */}
                         <div className="flex justify-between items-center text-xs md:text-sm text-gray-700 mt-1 space-x-2">
-                          <span>{car.model_year || 'N/A'}</span>
+                          <span>{car.year || 'N/A'} {car.model || 'N/A'}</span>
                           <span className={`px-2 py-0.5 rounded font-bold text-[10px] md:text-xs uppercase flex-shrink-0 ${(car.Status || '').toLowerCase() === 'sold'
                             ? 'bg-red-500 text-white'
                             : 'bg-green-500 text-white'
