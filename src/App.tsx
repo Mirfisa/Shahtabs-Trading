@@ -12,16 +12,20 @@ import Header from './components/Header';
 function App() {
   return (
     <Router>
-      <TopBar />
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/cars" element={<CarList />} />
-        <Route path="/car/:id" element={<CarDetails />} />
-        <Route path="/data" element={<DataPage />} />
-      </Routes>
-      <Footer />
+      <div className="min-h-screen flex flex-col">
+        <TopBar />
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/cars" element={<CarList />} />
+            <Route path="/car/:id" element={<CarDetails />} />
+            <Route path="/data" element={<DataPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }

@@ -30,12 +30,7 @@ const Header = () => {
             </nav>
           </div>
           <div className="hidden md:flex items-center space-x-4">
-            <Link
-              to="/data"
-              className="px-4 py-2 text-sm font-medium text-blue-500 border border-blue-500 rounded-md hover:bg-blue-50"
-            >
-              View All Data
-            </Link>
+
             <Link
               to="/contact"
               className="px-4 py-2 text-sm font-medium text-white bg-[#fe9900] rounded-md hover:bg-[#ec6f3d]"
@@ -69,14 +64,7 @@ const Header = () => {
             </Link>
 
 
-            <div className="mt-4 px-4">
-              <Link
-                to="/data"
-                className="block py-1.5 text-sm font-medium text-blue-500 border border-blue-500 rounded-md hover:bg-blue-50 text-center"
-              >
-                View All Data
-              </Link>
-            </div>
+
             <div className="mt-4">
               <Link
                 to="/contact"
