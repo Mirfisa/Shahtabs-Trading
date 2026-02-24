@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import Papa from 'papaparse';
 
 const DataPage: React.FC = () => {
   const location = useLocation();
@@ -13,10 +14,6 @@ const DataPage: React.FC = () => {
     if (!state?.cars) {
       const fetchData = async () => {
         try {
-          // Import Papa dynamically to avoid adding it as a top-level import if not needed elsewhere
-          // or assume it's available. Since it's used in CarList, it should be installed.
-          const Papa = await import('papaparse');
-
           // New spreadsheet URL as per request
           const response = await fetch('https://docs.google.com/spreadsheets/d/1ewIpPg69jB4lXGKfdPuS2e0jPsVVEVyrsUARTlcYPmI/export?format=csv');
           if (!response.ok) {
