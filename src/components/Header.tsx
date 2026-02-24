@@ -23,7 +23,7 @@ const Header = () => {
               </Link>
 
               <Link to="/cars" className="mx-2 text-sm text-gray-600 hover:text-gray-700 font-semibold transition duration-700 hover:scale-115 hover:shadow-lg hover:font-bold">
-                StockList
+                Stock List
               </Link>
 
 

@@ -54,73 +54,97 @@ const CarList: React.FC = () => {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const { collection, getDocs, query, orderBy } = await import('firebase/firestore');
-        const { db } = await import('../utils/firebase');
+        // New spreadsheet URL as per request
+        const response = await fetch('https://docs.google.com/spreadsheets/d/1ewIpPg69jB4lXGKfdPuS2e0jPsVVEVyrsUARTlcYPmI/export?format=csv');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const csv = await response.text();
+        console.log("Raw CSV length:", csv.length);
 
-        // Fetch all cars, arbitrarily ordered by serial number
-        const carsRef = collection(db, 'cars');
-        const q = query(carsRef, orderBy('serialNumber', 'desc'));
-        const querySnapshot = await getDocs(q);
+        Papa.parse(csv, {
+          header: true,
+          complete: (results) => {
+            console.log("Parsed data length:", results.data.length);
+            console.log("Parsed data:", results.data);
+            const processedCars = results.data.map((car: any) => {
+              const carName = car['Car Name'];
+              const carGrade = car['Grade'] ? car['Grade'].trim() : '';
+              const carModelYear = car['Model'];
+              const carImgURL = car['imgURL'];
+              const thumbnailPic = car['Thumbnail Pic'];
+              let driveImage = car['Drive Image'] || '';
+              const carPrice = car['Price'] ?? car['Landing'] ?? '';
+              let carPictures = 'https://via.placeholder.com/300x200?text=No+Image'; // Generic placeholder
 
-        const processedCars: Car[] = [];
+              const allImages = car['All Images'] ? car['All Images'].trim() : '';
 
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
+              // Priority 1: Use Thumbnail Pic from sheet
+              if (thumbnailPic && thumbnailPic.trim() !== '') {
+                carPictures = processDriveUrl(thumbnailPic.trim());
+              }
+              // Priority 2: Use All Images
+              else if (allImages) {
+                const validUrls = parseImageField(allImages);
 
-          // Map the Firebase schema back to the existing Component props
-          const carPictures = data.optimizedImages && data.optimizedImages.length > 0
-            ? data.optimizedImages[0]
-            : 'https://via.placeholder.com/300x200?text=No+Image';
+                if (validUrls.length > 0) {
+                  driveImage = validUrls.join('|');
+                  carPictures = validUrls[0];
+                }
+              }
+              // Priority 3: Use existing Drive Image (pipe-separated URLs) (Fallthrough)
+              else if (driveImage) { // Check if driveImage exists content
+                const validUrls = parseImageField(driveImage);
+                if (validUrls.length > 0) {
+                  carPictures = validUrls[0];
+                }
+              }
+              // Priority 4: Use imgURL if no Drive Image
+              else if (carImgURL) {
+                if (carImgURL.startsWith('/')) {
+                  carPictures = `${import.meta.env.BASE_URL}${carImgURL.startsWith('/') ? carImgURL.slice(1) : carImgURL}`;
+                } else {
+                  carPictures = carImgURL;
+                }
+              }
+              return { ...car, name: carName, grade: carGrade, model_year: carModelYear, pictures: carPictures, Price: carPrice, 'Drive Image': driveImage, 'Thumbnail Pic': thumbnailPic };
+            });
 
-          const driveImage = data.optimizedImages ? data.optimizedImages.join('|') : '';
+            // Deduplication logic
+            const uniqueCarsMap = new Map();
+            processedCars.forEach((car: any) => {
+              // Filter out items with missing S.N.
+              if (car['S.N.'] && car['S.N.'].trim() !== '' && !uniqueCarsMap.has(car['S.N.'])) {
+                uniqueCarsMap.set(car['S.N.'], car);
+              }
+            });
+            const uniqueCars = Array.from(uniqueCarsMap.values());
 
-          processedCars.push({
-            'S.N.': doc.id,
-            'Car Name': data.name,
-            'Model': data.modelYear,
-            'Chasis Number': data.chassisNumber,
-            'Colour': data.color,
-            'Mileage': data.mileage,
-            'Engine': data.engine,
-            'Grade': data.grade,
-            'Details': data.details,
-            'Price': data.price,
-            'Landing': data.landing,
-            'Location': data.location,
-            'Status': data.status,
-            'Drive Image': driveImage,
-            'Thumbnail Pic': '', // Not needed anymore as Cloudinary handles the thumbnail
-            name: data.name,
-            grade: data.grade,
-            model_year: data.modelYear,
-            pictures: carPictures,
-            imgURL: '',
-            Picture: '',
-          } as Car);
+            // Sort logic: Available/Unsold cars first
+            uniqueCars.sort((a: any, b: any) => {
+              const statusA = (a.Status || '').toLowerCase();
+              const statusB = (b.Status || '').toLowerCase();
+
+              const isAvailableA = statusA !== 'sold' && statusA !== '';
+              const isAvailableB = statusB !== 'sold' && statusB !== '';
+
+              if (isAvailableA && !isAvailableB) return -1;
+              if (!isAvailableA && isAvailableB) return 1;
+              return 0;
+            });
+
+            console.log("Processed cars (unique):", uniqueCars);
+            setCars(uniqueCars as Car[]);
+            setGrades([...new Set(uniqueCars.map((car: any) => car.grade))].sort());
+            setModelYears([...new Set(uniqueCars.map((car: any) => car.model_year))].sort());
+            setLoading(false);
+          },
+          error: (error: any) => {
+            throw new Error(error.message);
+          }
         });
-
-        // Ensure Sold cars are at the bottom
-        processedCars.sort((a: any, b: any) => {
-          const statusA = (a.Status || '').toLowerCase();
-          const statusB = (b.Status || '').toLowerCase();
-
-          const isAvailableA = statusA !== 'sold' && statusA !== '';
-          const isAvailableB = statusB !== 'sold' && statusB !== '';
-
-          if (isAvailableA && !isAvailableB) return -1;
-          if (!isAvailableA && isAvailableB) return 1;
-          return 0;
-        });
-
-        console.log("Processed cars from Firebase:", processedCars.length);
-        setCars(processedCars);
-        setGrades([...new Set(processedCars.map((car: any) => car.grade))].sort());
-        setModelYears([...new Set(processedCars.map((car: any) => car.model_year))].sort());
-        setLoading(false);
-
       } catch (error) {
-        console.error("Firebase fetch error:", error);
-        setError('Failed to fetch car data from Cloud Database. Please make sure Firebase is configured.');
+        setError('Failed to fetch car data. Please try again later.');
         setLoading(false);
       }
     };
