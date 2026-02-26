@@ -52,6 +52,7 @@ const RetryImage: React.FC<RetryImageProps> = ({ src, alt, className, loading, d
             onError={handleError}
             // @ts-ignore
             fetchpriority={fetchpriority}
+            referrerPolicy="no-referrer"
         />
     );
 };

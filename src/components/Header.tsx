@@ -31,12 +31,14 @@ const Header = () => {
           </div>
           <div className="hidden md:flex items-center space-x-4">
 
-            <Link
-              to="/contact"
+            <a
+              href="https://wa.me/8801811030303"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-4 py-2 text-sm font-medium text-white bg-[#fe9900] rounded-md hover:bg-[#ec6f3d]"
             >
               Contact us
-            </Link>
+            </a>
           </div>
           <div className="md:hidden">
             <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 hover:text-gray-700 focus:outline-none">
@@ -66,12 +68,14 @@ const Header = () => {
 
 
             <div className="mt-4">
-              <Link
-                to="/contact"
+              <a
+                href="https://wa.me/8801811030303"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block px-4 py-1.5 text-sm font-medium text-white bg-orange-500 rounded-md hover:bg-[#d68100] text-center"
               >
                 CONTACT US
-              </Link>
+              </a>
             </div>
           </div>
         )}

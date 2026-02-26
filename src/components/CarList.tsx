@@ -247,7 +247,7 @@ const CarList: React.FC = () => {
       <div className="container mx-auto px-2 sm:px-4">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
-          <div className={`lg:col-span-1 mt-4 lg:mt-16 ${isSidebarOpen ? 'block' : 'hidden'} lg:block`}>
+          <div className={`lg:col-span-1 ${isSidebarOpen ? 'block' : 'hidden'} lg:block sticky top-24 h-fit`}>
             <FilterSidebar
               filters={filters}
               onFilterChange={handleFilterChange}

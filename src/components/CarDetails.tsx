@@ -46,7 +46,7 @@ const CarDetails: React.FC = () => {
   const images = parseImages();
 
   const handleContactUs = () => {
-    const rawPhoneNumber = "+88 01947494174";
+    const rawPhoneNumber = "+88 01811030303";
 
     const formatPhoneNumber = (num: string) => {
       return num.replace(/[\s\-+]/g, '');
@@ -71,9 +71,9 @@ const CarDetails: React.FC = () => {
         <div className="mb-4">
           <button
             onClick={handleBack}
-            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 transition"
+            className="px-4 py-2 text-sm font-medium text-white bg-[#fe9900] rounded-md hover:bg-[#ec6f3d] transition shadow-sm"
           >
-            ← Back
+            ← Back to Stock List
           </button>
         </div>
 

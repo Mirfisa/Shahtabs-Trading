@@ -85,6 +85,7 @@ const CarCardImage: React.FC<CarCardImageProps> = ({ driveImages, fallbackImage,
                 onLoad={handleLoad}
                 // @ts-ignore
                 fetchpriority="high"
+                referrerPolicy="no-referrer"
             />
         </div>
     );
