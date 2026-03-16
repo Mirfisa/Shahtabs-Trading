@@ -98,7 +98,7 @@ const DownloadListButton: React.FC<DownloadListButtonProps> = ({ cars }) => {
                 didDrawPage: (data) => {
                     // Header Logo
                     const logoImg = new Image();
-                    logoImg.src = '/favicon.png';
+                    logoImg.src = `${import.meta.env.BASE_URL}favicon.png`;
                     try {
                         //let's make it 40x50
                         const pageWidth = doc.internal.pageSize.getWidth();
