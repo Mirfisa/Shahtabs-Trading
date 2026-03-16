@@ -3,6 +3,7 @@ import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
 import FilterSidebar from './FilterSidebar';
 import CarCardImage from './CarCardImage';
+import DownloadListButton from './DownloadListButton';
 import { processDriveUrl, parseImageField } from '../utils/imageParser';
 
 interface Car {
@@ -264,12 +265,15 @@ const CarList: React.FC = () => {
           <div className="lg:col-span-3">
             <div className="flex justify-between items-center mb-4">
               <h1 className="text-xl md:text-2xl font-bold text-center text-gray-800">Our Cars</h1>
-              <button
-                className="lg:hidden bg-orange-500 text-white px-4 py-2 rounded-md"
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              >
-                Filters
-              </button>
+              <div className="flex items-center space-x-2">
+                <DownloadListButton cars={filteredCars} />
+                <button
+                  className="lg:hidden bg-orange-500 text-white px-4 py-2 rounded-md"
+                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                >
+                  Filters
+                </button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
